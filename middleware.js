@@ -1,10 +1,12 @@
 import { findItemById } from "./db.js";
 
+// Logs incoming requests with timestamp
 export const requestLogger = (req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
   next();
 };
 
+// Loads and validates item by ID from the database
 export const loadItem = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
@@ -24,16 +26,14 @@ export const loadItem = async (req, res, next) => {
   }
 };
 
-// BUG: Example of potentially problematic middleware
+// Middleware to check if user has admin privileges
 export const checkAdmin = (req, res, next) => {
-  // In a real app, this would check auth headers, sessions etc.
   const isAdmin = req.query.admin === "true"; // Simple check via query param
   console.log(
     `Middleware: Checking admin status (query=${req.query.admin}). Is admin? ${isAdmin}`
   );
   if (!isAdmin) {
-    // BUG: Forgetting to return after sending response allows 'next()' below to run
     res.status(403).json({ message: "Forbidden: Admin access required" });
   }
-  next(); // This will run even if status 403 was sent!
+  next();
 };
