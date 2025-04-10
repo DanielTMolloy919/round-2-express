@@ -1,13 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Hello Express!</title>
+    <title>API Documentation</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="./style.css" />
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .endpoint {
+        margin-bottom: 30px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      code {
+        display: block;
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        margin: 10px 0;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello Express!</h1>
-    <p>Showing <code>pages/index.html</code></p>
+    <div class="container">
+      <h1>API Endpoints Documentation</h1>
+
+      <div class="endpoint">
+        <h2>1. Get All Items</h2>
+        <p>Retrieve all items with optional filters for category and name.</p>
+        <p><strong>Endpoint:</strong> GET /api/items</p>
+        <p><strong>Optional Query Parameters:</strong></p>
+        <ul>
+          <li>category - Filter by category</li>
+          <li>name - Filter by name</li>
+        </ul>
+        <p><strong>Example Requests:</strong></p>
+        <code
+          >// Get all items curl http://localhost:3010/api/items // Filter by
+          category curl http://localhost:3010/api/items?category=Fruit // Filter
+          by name curl http://localhost:3010/api/items?name=Apple // Filter by
+          both curl
+          http://localhost:3010/api/items?category=Fruit&name=Apple</code
+        >
+      </div>
+
+      <div class="endpoint">
+        <h2>2. Create New Item</h2>
+        <p>Create a new item with a name and category.</p>
+        <p><strong>Endpoint:</strong> POST /api/items</p>
+        <p><strong>Required Fields:</strong></p>
+        <ul>
+          <li>name - Item name</li>
+          <li>category - Item category</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <code
+          >curl -X POST http://localhost:3010/api/items \ -H "Content-Type:
+          application/json" \ -d '{"name": "Orange", "category": "Fruit"}'</code
+        >
+      </div>
+
+      <div class="endpoint">
+        <h2>3. Get Single Item</h2>
+        <p>Retrieve a specific item by its ID.</p>
+        <p><strong>Endpoint:</strong> GET /api/items/:id</p>
+        <p><strong>Example Request:</strong></p>
+        <code>curl http://localhost:3010/api/items/1</code>
+      </div>
+
+      <div class="endpoint">
+        <h2>4. Update Item (Admin Only)</h2>
+        <p>Update an existing item. Requires admin privileges.</p>
+        <p><strong>Endpoint:</strong> PUT /api/items/:id</p>
+        <p><strong>Optional Fields:</strong></p>
+        <ul>
+          <li>name - New item name</li>
+          <li>category - New item category</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <code
+          >curl -X PUT "http://localhost:3010/api/items/1?admin=true" \ -H
+          "Content-Type: application/json" \ -d '{"name": "Green Apple",
+          "category": "Fruit"}'</code
+        >
+      </div>
+
+      <div class="endpoint">
+        <h2>Response Format</h2>
+        <p>
+          All successful responses will return JSON data. Here's an example item
+          structure:
+        </p>
+        <code>{ "id": 1, "name": "Apple", "category": "Fruit" }</code>
+      </div>
+
+      <div class="endpoint">
+        <h2>Error Handling</h2>
+        <p>
+          Error responses will include a message field explaining what went
+          wrong:
+        </p>
+        <code>{ "message": "Error description here" }</code>
+        <p>Common HTTP status codes:</p>
+        <ul>
+          <li>200 - Success</li>
+          <li>201 - Created (for POST requests)</li>
+          <li>400 - Bad Request</li>
+          <li>403 - Forbidden (admin access required)</li>
+          <li>404 - Not Found</li>
+          <li>500 - Internal Server Error</li>
+        </ul>
+      </div>
+    </div>
   </body>
 </html>

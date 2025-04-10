@@ -9,6 +9,9 @@ const port = 3010;
 app.use(express.json()); // Parse JSON bodies
 app.use(requestLogger); // Log all requests
 
+// Serve static files from the pages directory
+app.use(express.static("pages"));
+
 // GET all items with optional filters
 app.get("/api/items", async (req, res) => {
   try {
