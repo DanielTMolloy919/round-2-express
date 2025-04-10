@@ -1,6 +1,6 @@
 import express from "express";
 import { requestLogger, loadItem, checkAdmin } from "./middleware.js";
-import { findItems, createItem, updateItem, deleteItem } from "./itemStore.js";
+import { findItems, createItem, updateItem, deleteItem } from "./db.js";
 
 const app = express();
 const port = 3010;
